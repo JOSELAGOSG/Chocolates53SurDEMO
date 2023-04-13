@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content%}
+<h1 class='text-center'>Nueva Marca</h1>
+<form class='text-center' method="post" style='padding-top:10rem;'>
+    {% csrf_token %}
+    <div class='row mb-1'>
+      <div class='col' style='padding:0;'><a>Nombre &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</a>{{form.name}}</div>
+      
+    </div>
+    <br>
+    <br>
+    
+    <button class='btn-success' type="submit">Crear Marca</button>
+    
+  </form>
+{%endblock%}

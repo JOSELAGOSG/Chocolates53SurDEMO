@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content%}
+    <h1><span class="text-uppercase">{{ company.name }}</span> | <small class="text-muted">{{company.email}}</small></h1><br>
+    <a>RUT : &nbsp;{{ company.rut}}</a><br>
+    <a>Telefono : &nbsp;{{ company.phone }}</a><br>
+    <a>Direccion : &nbsp;{{ company.address }}<a><br>
+{%endblock%}

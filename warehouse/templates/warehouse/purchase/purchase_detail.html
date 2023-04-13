@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block content%}
+    <h1>
+      <span>Compra</span> | 
+      <small class="text-muted">Número Factura: {{purchase.invoice_number}}</small>
+    </h1>
+    <h4>Proveedor: {{purchase.provider}}</h4>
+
+    <table class="table table-info table-sm table-striped table-hover table-bordered  caption-top">
+        <thead>
+          <tr>
+            <th scope="col">Cantidad de Cajas</th>
+            <th scope="col">Producto</th>
+            <th scope="col">Precio por Caja</th>
+            <th scope="col">Precio por Kilo</th>
+            <th scope="col" class="table-warning">Precio por Kilo + Flete</th>
+            <th scope="col">Total sin IVA sin Flete</th>
+            <th scope='col'></th>
+            
+          </tr>
+        </thead>
+        <tbody>
+        {% for item in purchase.item.all %}
+          <tr>
+            <td>{{ item.boxes_quantity}}</td>
+            <td>{{ item.product }}</td>
+            <td>$ {{ item.price_per_box }}</td>
+            <td>$ {{ item.get_price_per_kg }}</td>
+            <td>$ {{ item.get_price_per_kg_plus_freight_price_per_kg }}</td>
+            <td>$ {{ item.get_total_price }}</td>
+            <td><a href='{{ item.get_absolute_url }}'>Ver</a></td>
+            
+            
+          </tr>
+        {% endfor%}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td><a href='{{ purchase.get_create_item_url }}'>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg>
+              Agregar Item
+            </a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Peso Total: {{purchase.get_total_amount}} kg</td>
+            <td>Subtotal(Sin IVA): $ {{ purchase.get_total_price }}</td>
+            <td>Total(Con IVA):$ {{ purchase.get_total_price_with_taxes }}</td>
+          </tr>
+        </tfoot>
+    </table>
+    <br>
+    <br>
+    {% if purchase.payment %}
+      <strong style='color:green;'>Pagado</strong><a href='{{purchase.payment.get_absolute_url}}'>Ver Pago</a>
+    {% else %}
+      <strong style='color:red;'>Pendiente de Pago</strong>&nbsp;<a href='{{ purchase.get_create_payment_url }}'>Agregar Pago</a>
+    {% endif %}
+    <br>
+    {% if purchase.freight %}
+      <table class='table table-warning table-sm table-striped table-hover table-bordered  caption-top'>
+        <caption>Flete</caption>
+        <thead>
+          <tr>
+            <th scope='col'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-truck " viewBox="0 0 16 16">
+              <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+            </svg></th>
+            <th scope='col'>Número de Factura</th>
+            <th scope='col'>Compañía</th>
+            <th scope='col'>Fecha Contratación</th>
+            <th scope='col'>Fecha Recepción</th>
+            <th scope='col'>Precio(Sin IVA)</th>
+            <th scope='col'>Pago</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href='{{purchase.freight.get_absolute_url}}'>Ver Flete</a></td>
+            <td>{{purchase.freight.invoice_number}}</td>
+            <td>{{purchase.freight.company}}</td>
+            <td>{{purchase.freight.application_date}}</td>
+            <td>{{purchase.freight.reception_date}}</td>
+            <td>{{purchase.freight.price_without_taxes}}</td>
+            <td>{{purchase.freight.payment}}</td>
+          </tr>
+        </tbody>
+      </table>
+    {% else %}
+      <a href='{{ purchase.get_create_freight_url }}'>Agregar Flete</a>
+    {% endif %}
+{%endblock%}

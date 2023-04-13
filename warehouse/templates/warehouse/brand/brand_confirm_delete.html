@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content%}
+        <a><strong>¿Está segura de que quiere eliminar la marca : {{ brand.name }}?</strong></a>
+        
+        <form method='POST'>
+            {% csrf_token %}
+            <input class='button' type='submit' value='Eliminar'></input>
+        </form>
+{% endblock %}    
+    

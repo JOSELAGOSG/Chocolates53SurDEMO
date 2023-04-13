@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content%}
+
+    <div class="card text-center">
+        
+        <div class="card-body">
+          <h2 class="card-title"><i class="fa-solid fa-box"></i> Caja</h2>
+          <p class="card-text text-muted"> ID BODEGA: {{ box.id_warehouse }} | En: {{box.shelf}}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ box.product }} <a href='{{box.product.get_absolute_url}}'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-3x2-gap-fill me-2" viewBox="0 0 16 16">
+                <path d="M1 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V4zM1 9a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V9zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V9z"/>
+              </svg></a></li>
+          <li class="list-group-item">{{box.amount_kg}}&nbsp;{{box.measurement}}</li>
+          <li class="list-group-item">Vence en: &nbsp; {{box.expiration_date}}</li>
+          <li class="list-group-item">Ver Compra <a href='{{ box.purchase_item.purchase.get_absolute_url }}'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-receipt-cutoff" viewBox="0 0 16 16">
+            <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zM11.5 4a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"/>
+            <path d="M2.354.646a.5.5 0 0 0-.801.13l-.5 1A.5.5 0 0 0 1 2v13H.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1H15V2a.5.5 0 0 0-.053-.224l-.5-1a.5.5 0 0 0-.8-.13L13 1.293l-.646-.647a.5.5 0 0 0-.708 0L11 1.293l-.646-.647a.5.5 0 0 0-.708 0L9 1.293 8.354.646a.5.5 0 0 0-.708 0L7 1.293 6.354.646a.5.5 0 0 0-.708 0L5 1.293 4.354.646a.5.5 0 0 0-.708 0L3 1.293 2.354.646zm-.217 1.198.51.51a.5.5 0 0 0 .707 0L4 1.707l.646.647a.5.5 0 0 0 .708 0L6 1.707l.646.647a.5.5 0 0 0 .708 0L8 1.707l.646.647a.5.5 0 0 0 .708 0L10 1.707l.646.647a.5.5 0 0 0 .708 0L12 1.707l.646.647a.5.5 0 0 0 .708 0l.509-.51.137.274V15H2V2.118l.137-.274z"/>
+          </svg> </a></li>
+          {% if box.in_warehouse %}
+            <li class="list-group-item"><strong>En Bodega</strong></li>
+            {% if box.soon_to_expire %}
+                <li class="list-group-item bg-danger "><strong>Vence Pronto</strong></li>
+            {% endif %}
+          {% else %}
+            <li class="list-group-item"><strong>Retirada</strong></li>
+            <li class="list-group-item">Fecha Retiro: {{box.withdrawal_date}}</li>
+          {% endif %}
+          
+          
+        </ul>
+        <div class="card-body ">
+        {% if box.in_warehouse %}
+            <a href='{{box.get_withdraw_url}}'>Retirar de Bodega</a>
+        {% endif %}
+            &nbsp;&nbsp;
+            <a href='{{box.get_expiration_url}}'>Editar Fecha Vencimiento</a>
+            &nbsp;&nbsp;
+            <a href='{{box.get_shelf_url}}'>Editar Ubicación</a>
+            &nbsp;&nbsp;
+            <a href='{{box.get_id_url}}'>Agregar ID Bodega</a>
+        </div>
+      </div>
+    
+    
+{%endblock%}

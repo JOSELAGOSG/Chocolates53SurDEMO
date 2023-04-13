@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block content%}
+    <h1 class='text-center'><span>{{ product.name }}</span> <small class="text-muted">{{product.brand}}</small></h1><a href="{{ product.get_update_url }}">Editar</a>
+    
+    <div class='row' style=''>
+      <hr style='padding-bottom:2rem; color:#80a8e2;'>
+    
+      <h5 class='text-muted'><i class="fa-solid fa-warehouse fa-xs"></i>&nbsp;En Bodega</h5>
+      <div class="col-md-4">
+  
+          <!-- Card -->
+          <div class="card border-0">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col d-flex justify-content-around">
+  
+                          <div>
+                              <!-- Title -->
+                              <h5 class="d-flex align-items-center text-uppercase text-muted fw-semibold mb-2">
+                                  
+                              
+                              </h5>
+  
+                              <!-- Subtitle -->
+                              <h2 class="mb-0">
+                                  {{product.get_total__in_warehouse}} {{product.measurement}}
+                              </h2>
+  
+                              <!-- Comment -->
+                              <p class="fs-6 text-muted mb-0">
+                                  de {{product.name}}
+                              </p>
+                          </div>
+  
+                          <div style="padding:1rem; color:#1578CF;">
+                              <i class="fa-sharp fa-solid fa--hanging fa-xl"></i>                           
+                          </div>
+                      </div>
+                  </div> <!-- / .row -->
+              </div>
+          </div>
+      </div>
+      <div class="col-md-4">
+  
+          <!-- Card -->
+          <div class="card border-0">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col d-flex justify-content-around">
+  
+                          <div>
+                              <!-- Title -->
+                              <h5 class="d-flex align-items-center text-uppercase text-muted fw-semibold mb-2">
+                                  
+                              </h5>
+  
+                              <!-- Subtitle -->
+                              <h2 class="mb-0">
+                                  ${{product.get_total_value_in_warehouse}} CLP
+                              </h2>
+  
+                              <!-- Comment -->
+                              <p class="fs-6 text-muted mb-0">
+                                  en {{product.name}}
+                              </p>
+                          </div>
+  
+                          <div style="padding:1rem; color:#1578CF;">
+                              <i class="fa-sharp fa-solid fa-sack-dollar fa-xl"></i>                           
+                          </div>
+                      </div>
+                  </div> <!-- / .row -->
+              </div>
+          </div>
+      </div>
+      <div class="col-md-4">
+  
+          <!-- Card -->
+          <div class="card border-0">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col d-flex justify-content-around">
+  
+                          <div>
+                              <!-- Title -->
+                              <h5 class="d-flex align-items-center text-uppercase text-muted fw-semibold mb-2">
+                                  
+                              </h5>
+  
+                              <!-- Subtitle -->
+                              <h2 class="mb-0">
+                                  {{product.get_boxes_amount_in_warehouse}}
+                              </h2>
+  
+                              <!-- Comment -->
+                              <p class="fs-6 text-muted mb-0">
+                                  Cajas de {{product.name}}
+                              </p>
+                          </div>
+                          <div style="padding:1rem; color:#1578CF;">
+                              <i class="fa-solid fa-boxes-stacked fa-xl"></i>                          
+                          </div>
+                      </div>
+                  </div> <!-- / .row -->
+                  
+              </div>
+              
+          </div>
+      </div>
+      <hr style='padding-bottom:2rem; padding-left:0rem; color:#80a8e2;'>
+      </div>
+    
+      
+    
+    <table class="table table-info table-sm table-striped table-hover table-bordered  caption-top">
+      <caption>Cajas de {{ product.name }}</caption>
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Item Compra</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Fecha Vencimiento</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for box in product.boxes.all %}
+          <tr>
+            <td>{{ box.pk }}</td>
+            <td><a href="{{box.purchase_item.purchase.get_absolute_url}}">Ir a compra</a></td>
+            <td>{{ box.price }}</td>
+            <td>{{ box.amount }}{{ product.measurement }}</td>
+            <td>{{ box.expiration_date }}</td>
+            
+          </tr>
+        {% endfor%}
+        </tbody>
+    </table>
+{%endblock%}

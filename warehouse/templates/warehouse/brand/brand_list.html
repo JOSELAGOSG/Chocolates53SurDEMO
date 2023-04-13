@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Marcas</h1>
+
+<table class="table table-info table-sm table-striped table-hover table-bordered  caption-top">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for brand in brands%}
+      <tr>
+        <td>{{ brand.name }}</td>
+        <td><a href='{{ brand.get_absolute_url }}'>Ver</a></td>
+      </tr>
+    {% endfor%}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class='d-flex flex-row'>
+    <h2>Nueva Compra</h2>
+
+</div>
+<br><br><br>
+<div class='d-flex flex-row justify-content-around'>
+    <form method="post">
+        {% csrf_token %}
+        <label><strong>Numero de Factura :  </strong></label>
+        {{form.invoice_number}}
+        <br>
+        <br>
+        <label><strong>Fecha de Compra :  </strong></label>
+        {{form.date}}
+        <br>
+        <br>
+        <label><strong>Proveedor :  </strong></label>
+        {{form.provider}}
+        <br>
+        <br>
+        <label><strong> Nombre Vendedor:  </strong></label>
+        {{form.seller_name}}
+        <br>
+        <br>
+        <button type="submit" class="btn btn-success">Crear Compra</button>
+          
+    </form>
+</div>
+{%endblock%}

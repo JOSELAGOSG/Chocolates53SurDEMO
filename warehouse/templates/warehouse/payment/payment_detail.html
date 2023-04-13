@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Pago ID: {{ payment.pk }}</h1>
+<br>
+<a>Fecha : {{ payment.date }}</a>
+<br>
+<a>Metodo : {{ payment.method }}</a>
+<br>
+<a>Pagado por : {{ payment.paid_by }}</a>
+<br>
+<a>Voucher : <a href='{{payment.voucher_file.url}}'>{{ payment.voucher_file.url }}</a></a>
+{% endblock %}

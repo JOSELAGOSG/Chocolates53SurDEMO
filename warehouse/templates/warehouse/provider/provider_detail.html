@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content%}
+    <h1><span class="text-uppercase">{{ provider.name }}</span> | <small class="text-muted">{{provider.email}}</small></h1>
+    
+    
+    <table class="table table-info table-sm table-striped table-hover table-bordered  caption-top">
+      <caption>Historial de compras al Proveedor</caption>
+        <thead>
+          <tr>
+            <th scope="col">ID Compra</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Total Sin IVA</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for purchase in provider.purchase.all %}
+          <tr>
+            <td>{{ purchase.pk }}</td>
+            <td>{{ purchase.date }}</td>
+            <td>$ {{ purchase.get_total_price }}</td>
+            <td><a href='{{ purchase.get_absolute_url }}'>Ver</a></td>
+            
+            
+          </tr>
+        {% endfor%}
+        </tbody>
+    </table>
+{%endblock%}

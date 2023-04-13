@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content%}
+    <a>{{ brand.name }}</a> <a href="{{ brand.get_update_url}}">Editar</a>
+    <br>
+    {% for product in object_list %}
+        <li> {{product.name}} | <a href='{{ product.get_absolute_url }}'> Ver Producto </a></li>
+    {% endfor %}
+{%endblock%}

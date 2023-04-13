@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<table class='table table-info table-sm table-striped table-hover table-bordered  caption-top'>
+    <caption>Item de la compra {{ item.purchase.pk }}</caption>
+    <thead>
+        <tr>
+            <th scope="col">Cantidad de Cajas</th>
+            <th scope="col">Producto</th>
+            <th scope="col">Precio por Caja</th>
+            <th scope="col">Precio por Kilo</th>
+            <th scope="col">Total sin IVA</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ item.boxes_quantity}}</td>
+            <td>{{ item.product }}</td>
+            <td>$ {{ item.price_per_box }}</td>
+            <td>$ {{ item.get_price_per_kg }}</td>
+            <td>$ {{ item.get_total_price }}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+<table class="table table-sm table-hover table-bordered  caption-top">
+    <caption>Cajas de este Item</caption>
+    <thead>
+        <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Producto</th>
+        <th scope="col">Peso (kg)</th>
+        <th scope="col">Fecha Vencimiento</th>
+        <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for box in item.boxes.all %}
+        {% if box.soon_to_expire and box.in_warehouse %}
+        <tr class='table-danger'>
+        {% elif not box.in_warehouse %}
+        <tr class='table-warning'>
+        {% elif not box.expiration_date %}
+        <tr>
+        {% else %}
+        <tr class='table-info'>
+        {% endif%}
+            {% if box.in_warehouse %}
+            <td class='table-primary'>{{ box.pk }}</td>
+            {% else %}
+            <td>{{ box.pk }}</td>
+            {% endif %}
+            <td>{{ box.product }} <a href='{{box.product.get_absolute_url}}'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-3x2-gap-fill me-2" viewBox="0 0 16 16">
+            <path d="M1 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V4zM1 9a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V9zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V9z"/>
+            </svg></a></td>
+            <td>{{ box.amount }}</td>
+            <td>{{ box.expiration_date }}</td>
+            <td><a href='{{ box.get_absolute_url }}'>Ver</a></td>
+            
+        </tr>
+        
+    {% endfor%}
+    </tbody>
+</table>
+
+{% endblock %}

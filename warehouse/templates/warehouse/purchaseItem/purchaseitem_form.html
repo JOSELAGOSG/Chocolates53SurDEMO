@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content%}
+<h1 class='text-center'>Agregar Item</h1>
+<form class='text-center' method="post" style='padding-top:10rem;'>
+    {% csrf_token %}
+    <div class='row mb-1'>
+      <div class='col' style='padding:0;'><a>Producto &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</a>{{form.product}}</div>
+      
+    </div>
+    <div class='row mb-1'>
+      <div class='col' style='padding:0;'><a>Cantida de Cajas &nbsp; &nbsp; &nbsp; &nbsp;</a>{{form.boxes_quantity}}</div>
+      
+    </div>
+    <div class='row mb-1'>
+        <div class='col' style='padding:0;'><a>Peso por Caja &nbsp; &nbsp; &nbsp; &nbsp;</a>{{form._per_box_kg}}&nbsp;kg</div>
+        
+      </div>
+      <div class='row mb-1'>
+        <div class='col' style='padding:0;'><a>Precio por Caja &nbsp; &nbsp; &nbsp; &nbsp;</a>$&nbsp;{{form.price_per_box}}&nbsp;CLP</div>
+        
+      </div>
+    <br>
+    <br>
+    
+    <button class='btn-primary' type="submit">Agregar Item</button>
+    
+  </form>
+{%endblock%}

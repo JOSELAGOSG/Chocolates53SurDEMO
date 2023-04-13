@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class='d-flex flex-row'>
+    <h2>Agregar Pago</h2>
+
+</div>
+<br><br><br>
+
+<div class='d-flex flex-row justify-content-around'>
+    <form enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <button type="submit" class="btn btn-success">Crear Pago</button>
+          
+    </form>
+</div>
+{%endblock%}

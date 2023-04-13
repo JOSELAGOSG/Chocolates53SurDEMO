@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content%}
+        <a>Esta seguro de que quiere eliminar {{ provider.name }}?</a>
+        <form method='POST'>
+            {% csrf_token %}
+            <input class='button' type='submit' value='Eliminar'></input>
+        </form>
+{%endblock%}

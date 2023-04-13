@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Warehouse Ingredients</h1>
+  <p><a href="{% url 'recipe:wh-ingredient-create' %}">Add new warehouse ingredient</a></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Recipe</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Unit</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ingredient in ingredients %}
+        <tr>
+          <td>{{ ingredient.recipe.name }}</td>
+          <td>{{ ingredient.product.name }}</td>
+          <td>{{ ingredient.quantity }}</td>
+          <td>{{ ingredient.unit }}</td>
+          <td>
+            <a href="{% url 'recipe:wh-ingredient-detail' ingredient.pk %}">View</a>
+            <a href="{% url 'recipe:wh-ingredient-update' ingredient.pk %}">Edit</a>
+            <a href="{% url 'recipe:wh-ingredient-delete' ingredient.pk %}">Delete</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">No warehouse ingredients found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

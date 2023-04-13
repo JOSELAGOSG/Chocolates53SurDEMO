@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% block content%}
+
+    <div id='chart'></div>
+    <table class="table table-sm table-hover table-bordered  caption-top">
+        <thead>
+          <tr>
+            <th scope="col">ID Bodega</th>
+            <th scope="col">Producto</th>
+            <th scope="col">Item Compra</th>
+            <th scope="col">Peso (kg)</th>
+            <th scope="col">Fecha Vencimiento</th>
+            <th scope="col">Ubicación</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for box in boxes %}
+          {% if box.soon_to_expire and box.in_warehouse %}
+            <tr class='table-danger'>
+          {% elif not box.in_warehouse %}
+            <tr class='table-warning'>
+          {% elif not box.expiration_date %}
+            <tr>
+          {% else %}
+            <tr class='table-info'>
+          {% endif%}
+              {% if box.in_warehouse %}
+              <td class='table-primary'>{{ box.id_warehouse }}</td>
+              {% else %}
+              <td>{{ box.id_warehouse }}</td>
+              {% endif %}
+              <td>{{ box.product }} <a href='{{box.product.get_absolute_url}}'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-3x2-gap-fill me-2" viewBox="0 0 16 16">
+                <path d="M1 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V4zM1 9a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V9zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V9z"/>
+              </svg></a></td>
+              <td>Ver Item de Compra <a href='{{ box.purchase_item.get_absolute_url }}'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-receipt-cutoff" viewBox="0 0 16 16">
+                <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zM11.5 4a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"/>
+                <path d="M2.354.646a.5.5 0 0 0-.801.13l-.5 1A.5.5 0 0 0 1 2v13H.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1H15V2a.5.5 0 0 0-.053-.224l-.5-1a.5.5 0 0 0-.8-.13L13 1.293l-.646-.647a.5.5 0 0 0-.708 0L11 1.293l-.646-.647a.5.5 0 0 0-.708 0L9 1.293 8.354.646a.5.5 0 0 0-.708 0L7 1.293 6.354.646a.5.5 0 0 0-.708 0L5 1.293 4.354.646a.5.5 0 0 0-.708 0L3 1.293 2.354.646zm-.217 1.198.51.51a.5.5 0 0 0 .707 0L4 1.707l.646.647a.5.5 0 0 0 .708 0L6 1.707l.646.647a.5.5 0 0 0 .708 0L8 1.707l.646.647a.5.5 0 0 0 .708 0L10 1.707l.646.647a.5.5 0 0 0 .708 0L12 1.707l.646.647a.5.5 0 0 0 .708 0l.509-.51.137.274V15H2V2.118l.137-.274z"/>
+              </svg> </a></td>
+              <td>{{ box.amount }}</td>
+              <td>{{ box.expiration_date }}</td>
+              <td>{{ box.shelf }}</td>
+              <td><a href='{{ box.get_absolute_url }}'>Ver</a></td>
+              
+            </tr>
+          
+        {% endfor%}
+        </tbody>
+    </table>
+
+
+
+
+
+    <script>
+      var options = {
+        colors: [
+      '#0d6dda',
+      '#ef3939',
+      '#4ef282',
+      '#eccd6a'
+      ],
+        series: [{
+        name: 'Cantidad',
+        data: [
+        {{in_warehouse_amount|safe}},
+        {{soon_to_expire_in_warehouse_amount|safe}},
+        {{not_soon_to_expire_in_warehouse_amount|safe}},
+        {{withdrawed_amount|safe}} ]
+      }],
+        chart: {
+        height: 350,
+        type: 'bar',
+      },
+      plotOptions: {
+        bar: {
+          distributed: true,
+          borderRadius: 10,
+          dataLabels: {
+            position: 'top', // top, center, bottom
+          },
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val) {
+          return val + " cajas";
+        },
+        offsetY: -20,
+        style: {
+          fontSize: '12px',
+          colors: ["#304758"]
+        }
+      },
+      grid: {
+        xaxis: {
+          lines: {
+            show: false
+          }
+        },
+        yaxis: {
+            lines: {
+                show: true
+            }
+        }
+      },
+      
+      xaxis: {
+        categories: ['En Bodega', 'Vencen Pronto', 'No Vencen Pronto', 'Retirado de Bodega'],
+        position: 'top',
+        axisBorder: {
+          show: false
+        },
+        axisTicks: {
+          show: false
+        },
+        tooltip: {
+          enabled: true,
+        }
+      },
+      yaxis: {
+        show:false,
+        axisBorder: {
+          show: false
+        },
+        axisTicks: {
+          show: false,
+        },
+        labels: {
+          show: true,
+          formatter: function (val) {
+            return val + ' cajas';
+          }
+        }
+      
+      },
+      };
+
+      var chart = new ApexCharts(document.querySelector("#chart"), options);
+      chart.render();
+    </script>
+    <!--colors: [
+      '#f8d7da',
+      '#cff4fc',
+      '#3B71CA',
+      '#fff3cd'
+      ]
+    data: [
+        {{soon_to_expire_in_warehouse_amount|safe}},
+        {{not_soon_to_expire_in_warehouse_amount|safe}},
+        {{in_warehouse_amount|safe}},
+        {{withdrawed_amount|safe}} ]-->
+{%endblock%}

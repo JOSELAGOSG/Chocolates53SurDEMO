@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Flete ID: {{ freight.pk }}</h1>
+<br>
+{% if freight.payment %}
+    <a>Pago: {{ freight.payment }}</a>
+{% else %}
+    <a href='{{ freight.get_create_payment_url }}'>Agregar Pago</a>
+{% endif %}
+{% endblock %}

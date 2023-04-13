@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class='d-flex flex-row'>
+    <h2>Nuevo Proveedor</h2>
+
+</div>
+<br><br><br>
+<div class='d-flex flex-row justify-content-around'>
+    <form method="post">
+        {% csrf_token %}
+        <label><strong>Nombre :  </strong></label>
+        {{form.name}}
+        <br>
+        <br>
+        <label><strong>Rut :  </strong></label>
+        {{form.rut}}
+        <br><br>
+        <label><strong>Email :  </strong></label>
+        {{form.email}}
+        <br><br>
+        <label><strong>Numero de Teléfono :  </strong></label>
+        {{form.phone}}
+        <br><br>
+        <label><strong>Direccion :  </strong></label>
+        {{form.address}}
+        <br><br>
+
+        <button type="submit" class="btn btn-success btn-sm">Crear Proveedor</button>
+          
+    </form>
+</div>
+{%endblock%}

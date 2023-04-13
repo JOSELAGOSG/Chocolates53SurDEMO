@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ ingredient.recipe.name }} - {{ ingredient.product.name }}</h1>
+  <p>Quantity (in grams): {{ ingredient.quantity_gr }}</p>
+  <a href="{% url 'non-warehouse-ingredient-update' pk=ingredient.pk %}">Update</a>
+  <form method="post" action="{% url 'non-warehouse-ingredient-delete' pk=ingredient.pk %}">
+    {% csrf_token %}
+    <input type="submit" value="Delete">
+  </form>
+{% endblock %}

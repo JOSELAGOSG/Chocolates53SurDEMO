@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load products_names_list %} 
+{% load products_amounts_list %}
+{% load products_unities_names_list %}
+{% load products_unities_list %}
+{% block content%}
+
+<h1 align='center'>Productos</h1>
+
+<h3>Por kilo</h3>
+<div id='chart'></div>
+<h3>Por unidad</h3>
+<div id="chart2"></div>
+
+<div class='d-flex flex-row'>
+<table class="table table-info table-sm table-striped table-hover table-bordered  caption-top">
+  <caption>Lista de Productos</caption>  
+  <thead class='table-light'>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Marca</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for product in products%}
+      <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.brand }}</td>
+        <td><a href='{{ product.get_absolute_url }}'>Ver</a></td>
+      </tr>
+    {% endfor%}
+    </tbody>
+</table>
+</div>
+
+
+<script>
+  var options = {
+    colors: ["#77C2FE", "#249CFF", "#1578CF", "#0A579E", "#003870"],
+    series: [{
+    name: 'Peso Total',
+    data: {{products | products_amounts | safe }}
+  }],
+    chart: {
+    type: 'bar',
+    height: 350
+  },
+  plotOptions: {
+    bar: {
+      distributed: true,
+      borderRadius: 4,
+      horizontal: true,
+    }
+  },
+  dataLabels: {
+    enabled: true,
+    formatter: (val) => {
+      return val + ' kg'
+    }
+  },
+  xaxis: {
+    categories: {{products | products_names | safe }},
+  }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#chart"), options);
+  chart.render();
+</script>
+<script>
+  var options = {
+    colors: ["#77C2FE", "#249CFF", "#1578CF", "#0A579E", "#003870"],
+    series: [{
+    name: 'Cantidad',
+    data: {{products | products_unities | safe }}
+  }],
+    chart: {
+    type: 'bar',
+    height: 350
+  },
+  plotOptions: {
+    bar: {
+      distributed: true,
+      borderRadius: 4,
+      horizontal: true,
+    }
+  },
+  dataLabels: {
+    enabled: true,
+    formatter: (val) => {
+      return val + ' unidades'
+    }
+  },
+  xaxis: {
+    categories: {{products | products_unities_names | safe }},
+  }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#chart2"), options);
+  chart.render();
+</script>
+
+{% endblock %}

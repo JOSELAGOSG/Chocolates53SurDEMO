@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class='d-flex flex-row'>
+    <h2>Cambiar fecha de vencimiento de la caja {{object.pk}}</h2>
+
+</div>
+<br><br><br>
+<div class='d-flex flex-row justify-content-around'>
+    <form method="post">
+        {% csrf_token %}
+        <label>Fecha de Vencimiento :  </label>
+        {{form.expiration_date}}
+        
+        <button type="submit" class="btn btn-success">Cambiar</button>
+          
+    </form>
+</div>
+{%endblock%}

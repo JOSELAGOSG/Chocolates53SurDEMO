@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content%}
+<h1>Companias de Fletes</h1>
+<table class="table table-info table-sm table-striped table-hover table-bordered  caption-top">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">RUT</th>
+        <th scope="col">Email</th>
+        <th scope="col">Telefono</th>
+        <th scope="col">Direccion</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for company in companies%}
+      <tr>
+        <td>{{ company.name }}</td>
+        <td>{{ company.rut }}</td>
+        <td>{{ company.email }}</td>
+        <td>{{ company.phone }}</td>
+        <td>{{ company.address }}</td>
+        <td><a href='{{ company.get_absolute_url }}'>Ver</a></td>
+      </tr>
+    {% endfor%}
+    </tbody>
+</table>
+{% endblock %}

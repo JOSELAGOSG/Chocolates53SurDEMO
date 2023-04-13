@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class='d-flex flex-row'>
+    <h2>Agregar Flete</h2>
+
+</div>
+<br><br><br>
+<div class='d-flex flex-row justify-content-around'>
+    <form method="post">
+        {% csrf_token %}
+        <label><strong>Numero de Factura :  </strong></label>
+        {{form.invoice_number}}
+        <br>
+        <br>
+        <label><strong>Compania :  </strong></label>
+        {{form.company}}
+        <br>
+        <br>
+        <label><strong>Fecha Contratacion :  </strong></label>
+        {{form.application_date}}
+        <br>
+        <br>
+        <label><strong> Precio(Sin IVA):  </strong></label>
+        {{form.price_without_taxes}}
+        <br>
+        <br>
+        <button type="submit" class="btn btn-success">Crear Flete</button>
+          
+    </form>
+</div>
+{%endblock%}

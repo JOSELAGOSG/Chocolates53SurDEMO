@@ -1,0 +1,323 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1><strong>EN MANTENIMIENTO</strong></h1>
+<div class='row' style='height:700;'>
+    <hr style='padding-bottom:2rem; color:#80a8e2;'>
+  <div class='row' style='padding:1rem;'>
+    
+    <h5 class='text-muted'><i class="fa-solid fa-warehouse fa-xs"></i>&nbsp;En Bodega</h5>
+    <div class="col-md-4">
+
+        <!-- Card -->
+        <div class="card border-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col d-flex justify-content-around">
+
+                        <div>
+                            <!-- Title -->
+                            <h5 class="d-flex align-items-center text-uppercase text-muted fw-semibold mb-2">
+                                
+                            
+                            </h5>
+
+                            <!-- Subtitle -->
+                            <h2 class="mb-0">
+                                {{in_warehouse.total_amount}} Kg
+                            </h2>
+
+                            <!-- Comment -->
+                            <p class="fs-6 text-muted mb-0">
+                                de productos
+                            </p>
+                        </div>
+
+                        <div style="padding:1rem; color:#1578CF;">
+                            <i class="fa-sharp fa-solid fa--hanging fa-xl"></i>                           
+                        </div>
+                    </div>
+                </div> <!-- / .row -->
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+        <!-- Card -->
+        <div class="card border-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col d-flex justify-content-around">
+
+                        <div>
+                            <!-- Title -->
+                            <h5 class="d-flex align-items-center text-uppercase text-muted fw-semibold mb-2">
+                                
+                            </h5>
+
+                            <!-- Subtitle -->
+                            <h2 class="mb-0">
+                                ${{in_warehouse.total_value}} CLP
+                            </h2>
+
+                            <!-- Comment -->
+                            <p class="fs-6 text-muted mb-0">
+                                en productos
+                            </p>
+                        </div>
+
+                        <div style="padding:1rem; color:#1578CF;">
+                            <i class="fa-sharp fa-solid fa-sack-dollar fa-xl"></i>                           
+                        </div>
+                    </div>
+                </div> <!-- / .row -->
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+        <!-- Card -->
+        <div class="card border-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col d-flex justify-content-around">
+
+                        <div>
+                            <!-- Title -->
+                            <h5 class="d-flex align-items-center text-uppercase text-muted fw-semibold mb-2">
+                                
+                            </h5>
+
+                            <!-- Subtitle -->
+                            <h2 class="mb-0">
+                                {{in_warehouse.boxes_amount}}
+                            </h2>
+
+                            <!-- Comment -->
+                            <p class="fs-6 text-muted mb-0">
+                                Cajas
+                            </p>
+                        </div>
+                        <div style="padding:1rem; color:#1578CF;">
+                            <i class="fa-solid fa-boxes-stacked fa-xl"></i>                          
+                        </div>
+                    </div>
+                </div> <!-- / .row -->
+                
+            </div>
+            
+        </div>
+    </div>
+    </div>
+    <hr style='padding-bottom:2rem; color:#80a8e2;'>
+    
+    
+</div>
+<div class='row'>
+<div class='card border-0 col-6' style='padding:3rem;' id='chart-2'></div>
+<div class='card border-0 col-6' style='padding-left:3rem;'>
+    <table class="table table-sm table-hover table-bordered  caption-top">
+        <caption><i class="fa-solid fa-warehouse fa-xs"> Cajas En Bodega</caption>
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Producto</th>
+            <th scope="col">Cajas</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+        {% for tuple in in_warehouse.boxes_amount_per_product %}
+          <tr>
+              <td><i class="fa-solid fa-boxes"></i></td>
+              <td>{{tuple.0}}</td>
+              <td>{{tuple.1}}</td>
+              
+            </tr>
+          
+        {% endfor%}
+        </tbody>
+    </table>
+</div>
+<hr style='padding-bottom:2rem; color:#80a8e2;'>
+</div><!--row-->
+
+<div class='row' style='padding:3rem;'>
+    <table class="table table-sm table-hover table-bordered  caption-top">
+        <caption><i class="fa-solid fa-calendar-xmark fa-xs"> Vencen Pronto </caption>
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Producto</th>
+            <th scope="col">Cantidad por Vencer</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+        {% for tuple in in_warehouse.amount_soon_to_expire_per_product %}
+          <tr>
+              <td><i class="fa-solid fa-boxes"></i></td>
+              <td>{{tuple.0}}</td>
+              <td>{{tuple.1}}</td>
+              
+            </tr>
+          
+        {% endfor%}
+        </tbody>
+    </table>
+</div>
+
+
+    
+        
+        
+   
+
+
+<script>
+  
+    var options = {
+        series: [{
+        name: 'En Bodega',
+        data: {{ in_warehouse.amount_per_product.s | safe }}
+      },
+      {
+        name: 'Retirado',
+        data: {{ withdrawn.amount_per_product.s | safe }}
+      }
+      ],
+        chart: {
+        type: 'bar',
+        height: 450,
+        width: 400,
+        stacked: true,
+        toolbar: {
+          show: false
+        }
+      },
+      colors: ['#003870', '#77C2FE'],
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          barHeight: '100%',
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val) {
+          return val + ' kg'
+        }
+        
+      },
+      stroke: {
+        width: 1,
+        colors: ["#fff"]
+      },
+      
+      grid: {
+        xaxis: {
+          lines: {
+            show: false
+          }
+        },
+        yaxis: {
+            lines: {
+                show: false
+            }
+        }
+      },
+      yaxis: {
+        show:true,
+        title: {
+          //text: 'Kilogramos',
+        },
+      },
+      tooltip: {
+        shared: false,
+        x: {
+          formatter: function (val) {
+            return val
+          }
+        },
+        y: {
+          formatter: function (val) {
+            return Math.abs(val) + 'kg'
+          }
+        }
+      },
+      title: {
+        //text: 'Peso por Producto'
+      },
+      xaxis: {
+        categories: {{ in_warehouse.amount_per_product.names | safe }},
+        title: {
+          //text: 'Producto'
+        },
+        labels: {
+          formatter: function (val) {
+            return val
+          }
+        }
+      },
+      };
+
+      var chart = new ApexCharts(document.querySelector("#chart-1"), options);
+      chart.render();
+    
+    
+  
+</script>
+<script>
+    var options = {
+        series: {{ in_warehouse.amount_per_product.s | safe }},
+        labels: {{ in_warehouse.amount_per_product.names | safe}},
+        chart: {
+        type: 'donut',
+        height: 440,
+        width: 500, 
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            labels: {
+              show: true,
+              name: {
+                
+              },
+              value: {
+                formatter: (value) => {
+                  return value + ' kg'
+                }
+              },
+              total:{
+                show: true,
+                label: 'Total En Bodega',
+                formatter: (w) => {
+                  const sum = w.config.series.reduce((accumulator, value) => {
+                    return accumulator + value;
+                  }, 0);
+                  return sum + ' kg'
+                }
+              }
+            }
+          }
+        }
+      },
+      colors: ["#77C2FE", "#249CFF", "#1578CF", "#0A579E", "#003870"],
+      title: {
+        //text: 'En Bodega'
+      },
+      tooltip: {
+        shared: false,
+        y: {
+          formatter: function (val) {
+            return Math.abs(val) + ' kg'
+          }
+        }
+      },
+      };
+
+      var chart = new ApexCharts(document.querySelector("#chart-2"), options);
+      chart.render();
+</script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ recipe.name }}</h1>
+  <p>{{ recipe.description }}</p>
+
+  <h2>Ingredients</h2>
+  <ul>
+    {% for ingredient in recipe.warehouse_ingredients.all %}
+      <li>
+        {{ingredient.product.name}} | {{ingredient.quantity}} | {{ingredient.get_cost}}
+      </li>
+    {% endfor %}
+    {% for ingredient in recipe.non_warehouse_ingredients.all %}
+      <li>
+        {{ingredient.product.name}} | {{ingredient.quantity}} | {{ingredient.get_cost}}
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h3>Costo total neto: {{ recipe.get_cost }}</h3>
+
+  <a href='{{ recipe.get_create_wh_ingredient_url }}'>Agregar Ingrediente Bodega</a>
+  <a href='{{ recipe.get_create_non_wh_ingredient_url }}'>Agregar Ingrediente Externo</a>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Detalle del Ingrediente</h1>
+  <ul>
+    <li>Receta: {{ ingredient.recipe.name }}</li>
+    <li>Producto: {{ ingredient.product.name }}</li>
+    <li>Cantidad: {{ ingredient.quantity }} {{ ingredient.unit }}</li>
+  </ul>
+  <p><a href="{% url 'warehouse_ingredient_list' %}">Volver a la lista de ingredientes del almacén</a></p>
+{% endblock %}
+

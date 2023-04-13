@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content%}
+<h1 class='text-center'>Nueva Compañía de Fletes</h1>
+<form class='text-center' method="post" style='padding-top:10rem;'>
+    {% csrf_token %}
+    <div class='row mb-1'>
+      <div class='col' style='padding:0;'><a>Nombre &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</a>{{form.name}}</div>
+    </div>
+    <div class='row mb-1'>
+        <div class='col' style='padding:0;'><a>RUT &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</a>{{form.rut}}</div>
+    </div>
+    <div class='row mb-1'>
+        <div class='col' style='padding:0;'><a>Email &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</a>{{form.email}}</div>
+    </div>
+    <div class='row mb-1'>
+        <div class='col' style='padding:0;'><a>Teléfono &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</a>{{form.phone}}</div>
+    </div>
+    <div class='row mb-1'>
+        <div class='col' style='padding:0;'><a>Dirección &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</a>{{form.address}}</div>
+    </div>
+    <br>
+    <br>
+    
+    <button class='btn-success' type="submit">Crear Marca</button>
+    
+  </form>
+{%endblock%}

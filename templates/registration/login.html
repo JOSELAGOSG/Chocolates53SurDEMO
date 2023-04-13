@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="shortcut icon" href="https://chocolates53sur.cl/wp-content/uploads/2021/10/Sin-titulo-1.png" />
+    <script src="https://kit.fontawesome.com/457e5864dc.js" crossorigin="anonymous"></script>
+    
+
+    <title>Bodega | 53 Sur</title>
+   
+    
+</head>
+
+<body class='row vh-100 vw-100' style='background-color: #d6b894; position:sticky;'>
+  <div class='col-4'>
+    <img src='https://chocolates53sur.cl/wp-content/uploads/2021/10/BANNER-5.png' width="60%" height="100%"></img>
+  </div>
+  <div class='col-4' style='padding-top:5rem;'>
+  {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  <div class='text-center mb-3'>
+    <img class="mb-2" src="https://chocolates53sur.cl/wp-content/uploads/2021/10/Sin-titulo-1.png" alt="" width="150" height="150" class="rounded-circle">
+    <br>
+    <strong>Bodega Chocolates 53 Sur</strong>
+  </div>
+  <form class='text-center' method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class='row mb-1'>
+      <div class='col' style='padding:0;'><a>Usuario &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</a>{{form.username}}</div>
+      
+    </div>
+    <div class='row mb-1'>
+      <div class='col' style='padding:0;'><a>Contraseña &nbsp; &nbsp;</a>{{form.password}}</div>
+      
+    </div>
+    <br>
+    <br>
+    
+    <button class='btn-success' type="submit">Iniciar Sesión</button>
+    <input type="hidden" name="next" value="{{ next }}">
+  </form>
+</div>
+
+</body>
